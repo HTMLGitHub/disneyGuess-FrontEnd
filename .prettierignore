@@ -1,0 +1,21 @@
+# Ignore build output
+dist/
+build/
+
+# Ignore node modules
+node_modules/
+
+# Ignore everything in public (e.g., static assets)
+public/
+
+# Ignore env files
+.env
+.env.*
+
+# Ignore version control files
+.git
+.gitignore
+
+# Ignore lock files (optional)
+package-lock.json
+yarn.lock
