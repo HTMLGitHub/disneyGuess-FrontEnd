@@ -9,12 +9,20 @@ import UserIdentity from "../UserIdentity/UserIdentity"
 export default function Header({handleRegisterClick, handleLoginClick})
 {
     const currentUser = useContext(CurrentUserContext);
-
+    
     return (
         <header className="header">
             <Link to='/' className="header_link">
                 <img src={logo} alt="Logo" className="header__logo"></img>
             </Link>
+
+            <div className="header__left">
+                <Link to ="/about">
+                    <button className="header__about-button">About</button>
+                </Link>
+                
+
+            </div>
 
             <div className="header__right">
                 {currentUser && currentUser.name ? 
@@ -32,7 +40,7 @@ export default function Header({handleRegisterClick, handleLoginClick})
                             Register
                         </button>
                         <button 
-                            onclick={handleLoginClick}
+                            onClick={handleLoginClick}
                             type='button'
                             className="header__login-button">
                             Login
