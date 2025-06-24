@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './CharacterClues.css';
-import {Clues} from './clues.js'
+import {Clues} from '../../../utils/clues.js'
 
 export default function CharacterClues({characterId, visibleCount})
 {

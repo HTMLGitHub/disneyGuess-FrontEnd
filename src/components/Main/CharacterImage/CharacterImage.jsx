@@ -12,20 +12,31 @@ export default function CharacterImage({
     revealAnswer
 }){
     return (
-        <div className="character__image__container">
-            <img
-                src={imageUrl}
-                alt={`Image of ${name}`}
-                className="character__image"
-                style={{filter: `blur(${blurLevel}px)`}}
-            />
+        <div className='character__image__wrapper'>
+            <div className="character__image__container">
+                <div className='character__image__box'>
+                    {
+                        imageUrl ? (
+                            <img
+                                src={imageUrl}
+                                alt={`Image of ${name}`}
+                                className="character__image"
+                                style={{filter: `blur(${blurLevel}px)`}}
+                            />
+                        ):(
+                            <div className='character__image-loading'>
+                                Loading Image...
+                            </div>
+                    )}
+                </div>
 
-            <div className='character__image__name'>
-                {revealAnswer ? name : '\u00A0'}
-            </div>
-                
-            <CharacterClues characterId={4703 /*Mickey Mouse Default*/} visibleCount={visibleClueCount}/>
-            
+                <div className='character__image__name'>
+                    {revealAnswer ? name : '\u00A0'}
+                </div>
+            </div>     
+
+            <CharacterClues characterId={characterId} visibleCount={visibleClueCount}/>
+        
         </div>
     );
 }

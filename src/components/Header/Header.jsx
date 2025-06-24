@@ -13,7 +13,13 @@ export default function Header({handleRegisterClick, handleLoginClick})
     return (
         <header className="header">
             <Link to='/' className="header_link">
+            {/*
                 <img src={logo} alt="Logo" className="header__logo"></img>
+            */}
+
+                <div className="header__logo_wrapper">
+                    <div className="header__logo_icon"></div>
+                </div>
             </Link>
 
             <div className="header__left">

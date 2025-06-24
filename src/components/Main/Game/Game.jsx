@@ -80,11 +80,11 @@ export default function Game()
                 {
                     const timer = setTimeout(() => 
                     {
-                        setVisibleClueCount(prev => prev + 1); // Clue 1 was shown initially
+                        setVisibleClueCount(step + 2); // Clue 1 was shown initially
                         setBlurLevel(blurSteps[step]);
 
                         // Auto reveal at the final step
-                        if (blurLevel[step] == 0)
+                        if (blurSteps[step] == 0)
                         {
                             setRevealAnswer(true);
                             return;

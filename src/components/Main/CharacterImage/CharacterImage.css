@@ -1,9 +1,45 @@
-.character__image
+.character__image__container
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.character__image__box
 {
     width: 300px;
-    height: auto;
+    height: 375px;
+    background-color: rgba(255,255,255,0.05);
     border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    flex-shrink: 0;
+}
+
+.character__image-loading
+{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--disney-gold);
+    font-size: 20px;
+    font-family: "Waltograph", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-style: italic;
+    text-align: center;
+}
+
+.character__image
+{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
     transition: filter .3s ease;
+    display: block;
 }
 
 .character__image__name 
