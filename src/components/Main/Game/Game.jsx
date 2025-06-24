@@ -1,6 +1,6 @@
 import CharacterImage from "../CharacterImage/CharacterImage";
 import { baseURL } from "../../../utils/constants.js";
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import './Game.css';
 
 const ids = [1820, 1870, 1944, 1947, 2755, 2891, 2969, 4703, 4704, 5371, 6225];
@@ -12,16 +12,28 @@ export default function Game()
     const [usedIds, setUsedIds] = useState([]);
     const [character, setCharacter] = useState(null);
     const [guess, setGuess] = useState('');
+    const [revealAnswer, setRevealAnswer] = useState(false);
+    const [visibleClueCount, setVisibleClueCount] = useState(1);
+    const [blurLevel, setBlurLevel] = useState(100);
+
+    const clueTimerRef = useRef(null);
+    const timersRef = useRef([]);
 
     useEffect(() =>
     {
-        handleNewGame();        
+        handleNewGame(); 
+        setRevealAnswer(false);       
     },[]);
 
     const handleNewGame = () => 
     {
         console.log("New Game Clicked");
-        
+
+        // Clear all previoius times
+        timersRef.current.forEach(clearTimeout);
+        timersRef.current = [];
+
+        // Reset character pool if needed
         if(availableIds.length == 0)
         {
             // All characters have been used -- reset
@@ -31,6 +43,7 @@ export default function Game()
             return;
         }
 
+        // Pick random character
         const randomIndex = Math.floor(Math.random() * availableIds.length);
         const randomId = availableIds[randomIndex];
         console.log(`Fetching new character from: ${baseURL}/${randomId}`);
@@ -49,11 +62,42 @@ export default function Game()
             */
             setCharacter(data.data);
             setGuess("");
+            setVisibleClueCount(1);
+            setBlurLevel(100);
+            setRevealAnswer(false);
 
             // Remove from available and add to used
-            const newAvailable = availableIds.filter(id => id !== randomId);
-            setAvailableIds(newAvailable);
+            setAvailableIds(availableIds.filter(id => id !== randomId));
             setUsedIds([...usedIds, randomId]);
+
+            // Start timer to update clues & blur
+            const blurSteps = [75, 50, 25, 0];
+            const delay = 4000;
+
+            const revealStep = (step) =>
+            {
+                if(step < blurSteps.length) 
+                {
+                    const timer = setTimeout(() => 
+                    {
+                        setVisibleClueCount(prev => prev + 1); // Clue 1 was shown initially
+                        setBlurLevel(blurSteps[step]);
+
+                        // Auto reveal at the final step
+                        if (blurLevel[step] == 0)
+                        {
+                            setRevealAnswer(true);
+                            return;
+                        }
+
+                        revealStep(step + 1); // Call the next step
+                    }, delay);
+
+                    timersRef.current.push(timer);
+                }
+            };
+
+            revealStep(0); // start the sequence
         })
         .catch((err) => console.error(`Error fetching character: ${err}`));    
     };
@@ -61,21 +105,39 @@ export default function Game()
     const handleGuessSubmit = () =>
     {
         console.log(`User guessed: ${guess}`);
+        if(!character) return;
+
+        const normalizedGuess = guess.trim().toLowerCase();
+        const normalizedAnswer = character.name.trim().toLowerCase();
+
+        if(normalizedGuess === normalizedAnswer) 
+        {
+            console.log("Correct");
+            clearTimeout(clueTimerRef.current);
+            setRevealAnswer(true);
+            setBlurLevel(0); // remove the blur
+            setVisibleClueCount(4); // optionally reveal all clues too
+        }
+        else
+        {
+            console.log("Incorrect Guess")
+        }
     };
 
     return (
         <div className="game__container">
             {character && 
                 (
-                    <CharacterImage imageUrl={character.imageUrl} name={character.name}/>
+                    <CharacterImage 
+                    imageUrl={character.imageUrl} 
+                    name={character.name}
+                    characterId={character._id}
+                    blurLevel={blurLevel}
+                    visibleClueCount={visibleClueCount}
+                    revealAnswer={revealAnswer}
+                    />
                 )
-            }
-            <div className="game__clues">
-                <p>Clue 1: He wears red shorts.</p>
-                <p>Clue 2: He has a pet dog.</p>
-                <p>Clue 3: His dog is named Pluto.</p>
-                <p>Clue 4: He is one of the most iconic cartoon characters.</p>
-            </div>
+            }          
 
             <input 
                 type="text"

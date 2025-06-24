@@ -20,15 +20,13 @@ export default function Header({handleRegisterClick, handleLoginClick})
                 <Link to ="/about">
                     <button className="header__about-button">About</button>
                 </Link>
-                
-
             </div>
 
             <div className="header__right">
                 {currentUser && currentUser.name ? 
                 (
                     <Link to="/profile" className="header__link">
-                        <UserIdentity size={40} containerClass="user-identity__header"/>
+                        <UserIdentity size={40} containerClass="header__user-identity"/>
                     </Link>
                 ): 
                 (

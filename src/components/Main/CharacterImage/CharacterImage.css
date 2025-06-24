@@ -1,0 +1,15 @@
+.character__image
+{
+    width: 300px;
+    height: auto;
+    border-radius: 12px;
+    transition: filter .3s ease;
+}
+
+.character__image__name 
+{
+    margin-top: 20px;
+    font-size: 28px;
+    color: var(--disney-gold);
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+}

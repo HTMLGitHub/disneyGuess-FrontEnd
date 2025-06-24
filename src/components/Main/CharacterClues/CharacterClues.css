@@ -1,0 +1,25 @@
+.clues__container {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.clue {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px 14px;
+    border-left: 4px solid var(--disney-gold);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.clue_visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.clue_hidden {
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    user-select: none;
+}

@@ -1,0 +1,65 @@
+/* === MAIN GAME CONTAINER === */
+.game__container {
+    margin: 16px auto;
+    padding: 24px 32px;
+    max-width: 800px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    color: var(--white);
+    text-align: center;
+    font-family: "Cabinet Grotesk Bold", sans-serif;
+}
+
+/* === INPUT FIELD === */
+.game__input {
+    margin-top: 24px;
+    padding: 12px 18px;
+    border-radius: 10px;
+    border: 2px solid var(--disney-blue);
+    font-size: 16px;
+    width: 80%;
+    max-width: 400px;
+    font-family: inherit;
+}
+
+/* === BUTTONS === */
+.game__buttons {
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.game__buttons_submit,
+.game__buttons_newGame {
+    padding: 10px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: inherit;
+}
+
+.game__buttons_submit {
+    background-color: var(--disney-red);
+    color: var(--white);
+}
+
+.game__buttons_submit:hover {
+    background-color: var(--disney-darkred);
+}
+
+.game__buttons_newGame {
+    background-color: var(--disney-gold);
+    color: var(--disney-blue);
+}
+
+.game__buttons_newGame:hover {
+    background-color: #f4c10f;
+}
