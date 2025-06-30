@@ -1,0 +1,116 @@
+.modal__title {
+  margin: 0 0 24px 0;
+}
+
+.modal__form {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.modal__label {
+  margin: 0;
+  padding: 0;
+  color: black;
+  font-size: 16px;
+  font-family: "Cabinet Grotesk Bold", sans-serif;
+  line-height: 20px;
+}
+
+.modal__input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  outline: none;
+  padding: 0;
+  margin: 8px 0 24px 0;
+}
+
+.modal__radio-buttons {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0 0 32px 0;
+  border: none;
+}
+
+.modal__legend {
+  margin: 0 0 12px 0;
+  padding: 0;
+}
+
+.modal__label_type_radio {
+  display: flex;
+  align-items: center;
+  margin: 0 0 8px 0;
+  padding: 0;
+  gap: 11px;
+  opacity: .5;
+}
+
+.modal__button_checked{
+  opacity: 1;
+}
+
+
+.modal__submit {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  width: 124px;
+  height: 36px;
+}
+
+
+.modal__submit:hover {
+ opacity: 60%;
+}
+
+.modal__submit:disabled {
+ opacity: 30%;
+ cursor: not-allowed;
+}
+
+.modal__button-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.modal__auth-switch {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.modal__auth-text {
+  background: none;
+  font-family: "Cabinet Grotesk Bold", sans-serif;
+  line-height: 20px;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.5)
+}
+
+.modal__auth-button {
+  background: none;
+  font-family: "Cabinet Grotesk Bold", sans-serif;
+  line-height: 20px;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.5);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: none;
+}
+
+.modal__error {
+  color: red; 
+}

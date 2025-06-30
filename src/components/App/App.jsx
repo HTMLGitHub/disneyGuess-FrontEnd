@@ -5,19 +5,17 @@ import Header from '../Header/Header';
 import Main from "../Main/Main";
 import Footer from '../Footer/Footer';
 import About from "../About/About";
-/*import Profile from '../Profile/Profile';
+/*import Profile from '../Profile/Profile';*/
 
 import LoginModal from "../Modal/LoginModal/LoginModal"
 import RegisterModal from '../Modal/RegisterModal/RegisterModal'
-*/
-
 import CurrentUserContext from '../../Contexts/CurrentUserContext';
 import ProtectedRoutes from '../ProtectedRoutes/ProtectedRoutes';
-import {set} from 'mongoose';
+import * as auth from '../../utils/auth.';
+
 
 /*
 import * from '../../utils/api';
-import * from '../../utils/auth.';
 */
 export default function App()
 {
@@ -43,6 +41,97 @@ export default function App()
             window.history.replaceState({}, document.title);
         }
     }, [location, isAuthChecked, isLoggedIn]);
+
+    function handleSubmit(request) {
+        setIsSaving(true);
+        request()
+            .then(() => { closeActiveModal(); })
+            .catch(async (err) => 
+                {
+                    if (typeof err === "string") { console.error("Error:", err); }
+                    else if (err instanceof Response)
+                    {
+                        const errorText = await err.text();
+                        console.error("Server responeded with:", errorText);
+                    }
+                    else { console.error("Unexpected error:", err); }})
+            .finally(() => setIsSaving(false));
+    }
+
+    const handleRegister = ({name, email, password}) => 
+    {
+        auth.register({name, email, password})
+        .then(() =>
+        {
+            setActiveModal("login");
+            setRegisterError("");
+        })
+        .catch(async (err) =>
+        {
+            console.error("Registration error:", err);
+            let errorMessage = "An error occurred during registration";
+            if (err instanceof Response) 
+            {
+                try
+                {
+                    const errorData = await err.json();
+
+                    if(errorData?.message) { errorMessage = errorData.message; }
+                }
+                catch(jsonError) { console.warn("Error parsing JSON", jsonError); }
+            }
+            else if(err?.message) { errorMessage = err.message; }
+
+            if
+            (
+                errorMessage.includes("Email already exists") || 
+                errorMessage.includes("11000") || 
+                errorMessage.includes("409")
+            ) { setRegisterError("Email is already registered"); }
+            else { setRegisterError(errorMessage); }
+        });
+    };
+
+    const handleLogin = ({email, password}) =>
+    {
+        return auth.login({ email, password })
+      .then((res) => {
+        localStorage.setItem("jwt", res.token);
+        setToken(res.token);
+        setIsLoggedIn(true);
+        setLoginError("");
+        return auth.checkToken(res.token);
+      })
+      .then((userData) => {
+        setCurrentUser(userData);
+        closeActiveModal();
+      })
+      .catch((err) => {
+        console.error("Login error", err);
+        setLoginError("Invalid email or password");
+      });
+    };
+
+    useEffect(() => {
+    const storedToken = localStorage.getItem("jwt");
+    if (storedToken) { // Save token to state
+      setToken(storedToken);
+      auth.checkToken(storedToken)
+        .then((userData) => {
+          setCurrentUser(userData);
+          setIsLoggedIn(true);
+        })
+        .catch((err) => {
+          console.error("Token check failed", err);
+          setIsLoggedIn(false);
+        }).finally(() => {
+          setIsAuthChecked(true);
+        });
+    }
+    else {
+      setIsAuthChecked(true);
+    }
+  }, []);
     
     const closeActiveModal = () => setActiveModal("");
 
@@ -55,6 +144,8 @@ export default function App()
 
         navigate("/", {replace: true});
     }
+
+    console.log("App.jsx - Mounted");
 
     return (
         <CurrentUserContext.Provider value={currentUser}>
@@ -91,8 +182,26 @@ export default function App()
                     </Routes>
 
                     <Footer/>
-                </div>
-            </div>
+                </div> {/*end of class = app__content*/}
+
+                <LoginModal
+                    closeActiveModal={closeActiveModal}
+                    activeModal={activeModal}
+                    onLogin={handleLogin}
+                    isSaving={isSaving}
+                    setActiveModal={setActiveModal}
+                    loginError={loginError}
+                />
+                
+                <RegisterModal
+                    closeActiveModal={closeActiveModal}
+                    activeModal={activeModal}
+                    onRegister={handleRegister}
+                    isSaving={isSaving}
+                    setActiveModal={setActiveModal}
+                    registerError={registerError}
+                />
+            </div> {/*end of class = app*/}
         </CurrentUserContext.Provider>
     );
 }
