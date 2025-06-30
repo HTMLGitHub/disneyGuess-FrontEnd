@@ -1,0 +1,136 @@
+.about
+{
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 32px;
+    background: var(--glass-bg);
+    border-radius: 20px;
+    backdrop-filter: blur(var(--glass-blur));
+    box-shadow: 0 0 30px var(--disney-gold);
+    border: 1px solid var(--glass-border);
+    color: var(--white);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.about__header
+{
+    text-align: center;
+    font-size: 45px;
+    margin-bottom: 24px;
+    color: var(--disney-gold);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    font-family: "Waltograph", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.about__intro
+{
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 32px;
+    color: var(--white);
+}
+
+.about__play
+{
+    margin-bottom: 32px;
+}
+
+.about__title
+{
+    font-size: 26px;
+    color: var(--disney-red);
+    margin-bottom: 8px;
+    font-family: "Waltograph", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.about__play-steps
+{
+    padding-left: 24px;
+    line-height: 1.8;
+}
+
+.about__play-step
+{
+    margin-bottom: 10px;
+}
+
+.about__creator
+{
+    margin-bottom: 32px;
+}
+
+.about__creator-text
+{
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.about__creator-text strong
+{
+    font-family: "Waltograph", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--disney-gold);
+}
+
+.about__tech
+{
+    margin-bottom: 32px;
+}
+
+.about__tech-list
+{
+    padding-left: 26px;
+    line-height: 1.8;
+}
+
+.about__tech-item
+{
+    margin-bottom: 10px;
+}
+
+.about__tech-link
+{
+    color: var(--disney-gold);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.about__tech-link:hover
+{
+    color: var(--disney-red);
+}
+
+.about__disclaimer
+{
+    margin-bottom: 32px;
+}
+
+.about__disclaimer-text
+{
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.about__start
+{
+    text-align: center;
+    margin-top: 40px;
+}
+
+.about__start-link
+{
+    background: var(--disney-red);
+    color: var(--white);
+    padding: 14px 26px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    transition: background 0.3s ease;
+    font-family: "Waltograph", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.about__start-link:hover
+{
+   background: var(--disney-darkred);
+}
