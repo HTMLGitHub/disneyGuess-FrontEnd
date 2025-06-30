@@ -5,7 +5,7 @@ import {Clues} from '../../../utils/clues.js'
 
 export default function CharacterClues({characterId, visibleCount})
 {
-    const clues = Clues[2891] || [];
+    const clues = Clues[characterId] || [];
 
     return (
         <div className="clues__container">
