@@ -11,7 +11,7 @@ import LoginModal from "../Modal/LoginModal/LoginModal"
 import RegisterModal from '../Modal/RegisterModal/RegisterModal'
 import CurrentUserContext from '../../Contexts/CurrentUserContext';
 import ProtectedRoutes from '../ProtectedRoutes/ProtectedRoutes';
-import * as auth from '../../utils/auth.';
+import * as auth from '../../utils/auth.js'; // Import auth functions
 
 
 /*
@@ -192,7 +192,7 @@ export default function App()
                     setActiveModal={setActiveModal}
                     loginError={loginError}
                 />
-                
+
                 <RegisterModal
                     closeActiveModal={closeActiveModal}
                     activeModal={activeModal}

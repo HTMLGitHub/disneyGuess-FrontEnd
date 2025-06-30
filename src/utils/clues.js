@@ -42,10 +42,10 @@ export const Clues = {
   
   // Grumpy
   2891: [
-    "He wears red shorts.",
-    "He has a pet dog.",
-    "His dog is named Pluto.",
-    "He is one of the most iconic cartoon characters."
+    "He’s one of seven who work in the mines, but he’s never seen with a smile.",
+    "Quick to complain and roll his eyes, yet deep down he cares for his friends.",
+    "With a scowl under bushy eyebrows and a beard as white as snow, his name fits his mood.",
+    "He always crosses his arms, frowns at everything, and thinks happiness is overrated."
   ],
   
   // Happy
