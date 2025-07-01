@@ -53,9 +53,9 @@ export default function LoginModal({
         <ModalWithForm
             title={
                 <span>
-                    <span style={{color: "black"}}>Log In</span>
+                    <span style={{color: "var(--disney-gold"}}>Log In</span>
                     {loginError && (
-                        <span style={{color: "red"}}> &nbsp;{loginError}</span>
+                        <span style={{color: "var(--disney-darkred"}}> &nbsp;{loginError}</span>
                     )}
                 </span>
             }
