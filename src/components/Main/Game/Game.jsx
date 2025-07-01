@@ -1,9 +1,11 @@
 import CharacterImage from "../CharacterImage/CharacterImage";
 import { baseURL } from "../../../utils/constants.js";
 import React, {useState, useEffect, useRef} from 'react';
+import {clueIds} from '../../../utils/clues.js';
+import Preloader from "../../Preloader/Preloader.jsx";
 import './Game.css';
 
-const ids = [1820, 1870, 1944, 1947, 2755, 2891, 2969, 4703, 4704, 5371, 6225];
+const ids = clueIds; // Use the exported clue IDs from clues.js
 
 
 export default function Game()
@@ -15,6 +17,7 @@ export default function Game()
     const [revealAnswer, setRevealAnswer] = useState(false);
     const [visibleClueCount, setVisibleClueCount] = useState(1);
     const [blurLevel, setBlurLevel] = useState(100);
+    const [loading, setLoading] = useState(false);
 
     const clueTimerRef = useRef(null);
     const timersRef = useRef([]);
@@ -25,13 +28,21 @@ export default function Game()
         setRevealAnswer(false);       
     },[]);
 
+    const stopALLTimers = () =>
+    {
+        timersRef.current.forEach(clearTimeout);
+        timersRef.current = [];
+        console.log("All timers cleared");
+    }
+
     const handleNewGame = () => 
     {
         console.log("New Game Clicked");
 
+        setLoading(true); // start loading
+
         // Clear all previoius times
-        timersRef.current.forEach(clearTimeout);
-        timersRef.current = [];
+        stopALLTimers();
 
         // Reset character pool if needed
         if(availableIds.length == 0)
@@ -40,6 +51,7 @@ export default function Game()
             setAvailableIds([...ids]);
             setUsedIds([]);
             console.log("All characters used - resetting character pool");
+            setLoading(false); // end loading if reset
             return;
         }
 
@@ -63,15 +75,17 @@ export default function Game()
             setCharacter(data.data);
             setGuess("");
             setVisibleClueCount(1);
-            setBlurLevel(100);
+            setBlurLevel(80);
             setRevealAnswer(false);
 
             // Remove from available and add to used
             setAvailableIds(availableIds.filter(id => id !== randomId));
             setUsedIds([...usedIds, randomId]);
 
+            setLoading(false); // done loading
+
             // Start timer to update clues & blur
-            const blurSteps = [75, 50, 25, 0];
+            const blurSteps = [55, 35, 15, 0];
             const delay = 4000;
 
             const revealStep = (step) =>
@@ -99,7 +113,12 @@ export default function Game()
 
             revealStep(0); // start the sequence
         })
-        .catch((err) => console.error(`Error fetching character: ${err}`));    
+        .catch((err) => 
+        {
+            console.error(`Error fetching character: ${err}`)
+            setLoading(false); // end loading on error
+        });    
+        
     };
 
     const handleGuessSubmit = () =>
@@ -113,7 +132,7 @@ export default function Game()
         if(normalizedGuess === normalizedAnswer) 
         {
             console.log("Correct");
-            clearTimeout(clueTimerRef.current);
+            stopALLTimers(); // stop all timers
             setRevealAnswer(true);
             setBlurLevel(0); // remove the blur
             setVisibleClueCount(4); // optionally reveal all clues too
@@ -125,42 +144,76 @@ export default function Game()
     };
 
     return (
+        console.log("Render Check:",
+        { 
+            loading, 
+            guess, 
+            trimmedGuess: guess.trim(),
+            notGuessTrim: !guess.trim(), 
+            characterLoaded: !!character 
+        }),
+
         <div className="game__container">
-            {character && 
+            <div className="game__image">
+            {
+                loading ? 
                 (
-                    <CharacterImage 
-                    imageUrl={character.imageUrl} 
-                    name={character.name}
-                    characterId={character._id}
-                    blurLevel={blurLevel}
-                    visibleClueCount={visibleClueCount}
-                    revealAnswer={revealAnswer}
-                    />
+                    <div className="game__loading-placeholder">
+                        <Preloader text="Loading Character..."/>
+                    </div> // end of game__loading-placeholder
+                ) : 
+                (
+                    character && 
+                    (
+                        <CharacterImage 
+                        imageUrl={character.imageUrl} 
+                        name={character.name}
+                        characterId={character._id}
+                        blurLevel={blurLevel}
+                        visibleClueCount={visibleClueCount}
+                        revealAnswer={revealAnswer}
+                        />
+                    )
                 )
-            }          
+            }
+            </div> {/* end of game__image*/}
+            <div className="game__controls">
+                <input 
+                    type="text"
+                    placeholder="Enter your guess..."
+                    value={guess}
+                    onChange={(e)=> setGuess(e.target.value)}
+                    className="game__input"
+                    disabled={loading || revealAnswer} // Disable if loading or answer revealed
+                    autoFocus={!loading} // Focus input only if not loading
+                />                
 
-            <input 
-                type="text"
-                placeholder="Enter your guess..."
-                value={guess}
-                onChange={(e)=> setGuess(e.target.value)}
-                className="game__input"
-            />
-
-            <div className="game__buttons">
-                <button 
-                    onClick={handleGuessSubmit}
-                    className="game__buttons_submit"
-                >
-                    Submit Guess
-                </button>
-                <button 
-                    onClick={handleNewGame}
-                    className="game__buttons_newGame"
-                >
-                    New Game
-                </button>
-            </div>
-        </div>
+                <div className="game__buttons">
+                    <button 
+                        onClick={handleGuessSubmit}
+                        className="game__buttons_submit"
+                        disabled={loading || !guess.trim() || !character || revealAnswer} // Disable if no guess or loading
+                        title=
+                        {
+                            loading ?
+                            "Loading character, please wait..." :
+                            !guess.trim() ?
+                            "Please enter a guess before submitting." :
+                            !character ?
+                            "Character not loaded yet. Please wait." :
+                            "Submit your guess"
+                        }                      
+                    >
+                        Submit Guess
+                    </button>
+                    <button 
+                        onClick={handleNewGame}
+                        className="game__buttons_newGame"
+                    >
+                        New Game
+                    </button>
+                </div> {/* end of game__buttons*/}
+            </div> {/* end of game__controls*/}
+        </div> /*end of game__container*/
     );
 }

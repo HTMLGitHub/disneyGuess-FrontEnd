@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import CharacterClues from '../CharacterClues/CharacterClues';
 import './CharacterImage.css';
+import Preloader from "../../Preloader/Preloader.jsx";
 
 export default function CharacterImage({
     imageUrl, 
@@ -10,24 +11,27 @@ export default function CharacterImage({
     blurLevel, 
     visibleClueCount,
     revealAnswer
-}){
+})
+{
+    const [imageLoaded, setImageLoaded] = useState(false);
+    const [imageError, setImageError] = useState(false);
+
     return (
         <div className='character__image__wrapper'>
             <div className="character__image__container">
                 <div className='character__image__box'>
-                    {
-                        imageUrl ? (
-                            <img
-                                src={imageUrl}
-                                alt={`Image of ${name}`}
-                                className="character__image"
-                                style={{filter: `blur(${blurLevel}px)`}}
-                            />
-                        ):(
-                            <div className='character__image-loading'>
-                                Loading Image...
-                            </div>
-                    )}
+                    
+                    {/* Show spinner IF loading or Error*/}
+                    {!imageLoaded && !imageError && <Preloader text="Loading character..." />}
+                    {imageError && (<Spinner text="Error loading image"/>)}
+                    <img
+                        src={imageUrl}
+                        alt={`Image of ${name}`}
+                        className="character__image"
+                        style={{filter: `blur(${blurLevel}px)`, display: imageLoaded ? 'block' : 'none'}}
+                        onLoad={() => setImageLoaded(true)}
+                        onError={() => setImageError(true)}
+                    />   
                 </div>
 
                 <div className='character__image__name'>
