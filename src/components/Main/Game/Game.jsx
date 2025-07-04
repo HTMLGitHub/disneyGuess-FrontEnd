@@ -1,7 +1,7 @@
 import CharacterImage from "../CharacterImage/CharacterImage";
 import { baseURL } from "../../../utils/constants.js";
 import React, {useState, useEffect, useRef} from 'react';
-import {clueIds} from '../../../utils/clues.js';
+import {clueIds} from '../../../utils/clues/clues.js';
 import Preloader from "../../Preloader/Preloader.jsx";
 import './Game.css';
 
