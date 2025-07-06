@@ -1,11 +1,11 @@
 import CharacterImage from "../CharacterImage/CharacterImage";
 import { baseURL } from "../../../utils/constants.js";
 import React, {useState, useEffect, useRef} from 'react';
-import {clueIds} from '../../../utils/clues/clues.js';
+import {Clues} from '../../../utils/clues/clues.js';
 import Preloader from "../../Preloader/Preloader.jsx";
 import './Game.css';
 
-const ids = clueIds; // Use the exported clue IDs from clues.js
+const ids = Object.keys(Clues).map(Number);
 
 
 export default function Game()
@@ -21,8 +21,6 @@ export default function Game()
     const [score, setScore] = useState(0);
 
     const timersRef = useRef([]);
-
-
 
     useEffect(() =>
     {
@@ -74,15 +72,27 @@ export default function Game()
             link.download= 'characterData.data.json';
             link.click();
             */
-            setCharacter(data.data);
+
+            const apiCharacter = data.data;
+            const clueData = Clues[apiCharacter._id] || {};
+
+            const mergedCharacter =
+            {
+                ...apiCharacter, 
+                aliases: clueData.aliases || [],
+                strictAliases: clueData.strictAliases || [],
+                clues: clueData.clues || [],
+            };
+
+            setCharacter(mergedCharacter);
             setGuess("");
             setVisibleClueCount(1);
             setBlurLevel(80);
             setRevealAnswer(false);
 
             // Remove from available and add to used
-            setAvailableIds(availableIds.filter(id => id !== randomId));
-            setUsedIds([...usedIds, randomId]);
+            setAvailableIds(availableIds.filter(id => id !== apiCharacter._id));
+            setUsedIds([...usedIds, apiCharacter._id]);
 
             setLoading(false); // done loading
 
@@ -128,12 +138,67 @@ export default function Game()
     const handleGuessSubmit = () =>
     {
         console.log(`User guessed: ${guess}`);
+        
         if(!character) return;
 
-        const normalizedGuess = guess.trim().toLowerCase();
-        const normalizedAnswer = character.name.trim().toLowerCase();
+        console.log(`Character Object:`, character);
 
-        if(normalizedGuess === normalizedAnswer) 
+        const normalizedGuess = normalizeName(guess);
+        console.log("Normalized Guess:", normalizedGuess);
+
+        const normalizedAnswer = normalizeName(character.name);
+        console.log("Normalized Answer:", normalizedAnswer);
+
+        const normalizedGuessWords = normalizedGuess
+                                .split(/[ ,]+/)
+                                .filter(Boolean);
+        console.log("Normalized Guess Words:", normalizedGuessWords);
+
+        const isExactMatch = normalizedGuess === normalizedAnswer;
+
+        console.log("Character aliases (raw):", character.aliases);
+        if(character.aliases) 
+        {
+            console.log("Character aliases (normalized):", character.aliases.map(a => normalizeName(a)));
+        }
+
+        const isAliasMatch = character.aliases && character.aliases.some
+        (
+            alias => normalizeName(alias) === normalizedGuess
+        );
+
+        console.log("isAliasMatch result:", isAliasMatch);
+
+        console.log("StrictAliasMatch:", character.strictAliases);
+        if(character.strictAliases)
+        {
+            console.log("Character strict aliases (normalized):", character.strictAliases.map(a => normalizeName(a)));
+        }
+
+        const isStrictAliasMatch = character.strictAliases && character.strictAliases.some
+        (
+            requiredNames => 
+            {
+                const normalizedRequired = requiredNames.map(name => normalizeName(name));
+                const allIncluded = normalizedRequired.every(req => normalizedGuessWords.includes(req));
+
+                return allIncluded && normalizedGuessWords.length === normalizedRequired.length;
+            }            
+        );
+
+        console.log("isStrictAliasMatch:", isStrictAliasMatch);
+
+        let pointsAwarded = 0;
+
+        console.log("Matching Results:",
+            {
+                isExactMatch,
+                isAliasMatch,
+                isStrictAliasMatch
+            }
+        );
+
+        if (isExactMatch || isAliasMatch || isStrictAliasMatch) 
         {
             console.log("Correct");
             stopALLTimers(); // stop all timers
@@ -142,14 +207,29 @@ export default function Game()
             setVisibleClueCount(4); // optionally reveal all clues too
 
             // Calculate points based on clue revealed
-            let pointsAwarded = 5 - (visibleClueCount - 1); // clue 1 = 5, clue 2 = 4, etc
+            pointsAwarded = 5 - (visibleClueCount - 1); // clue 1 = 5, clue 2 = 4, etc
 
-            if(pointsAwarded < 1)
-            {
-                pointsAwarded = 1; // If image is unblurred, award minimum 1 point
-            }
+            if(pointsAwarded < 1) pointsAwarded = 1; // If image is unblurred, award minimum 1 point
 
             if(revealAnswer) pointsAwarded = 0; // No points if name is revealed
+
+            // Bonus points for trio partion guesses
+            if(character.strictAliases && !isStrictAliasMatch)
+            {
+                const guessCount = normalizedGuessWords.length;
+
+                pointsAwarded += Math.max(0, guessCount - 1);
+            }
+
+            // Bonus points for full name entry
+            if (isExactMatch)
+            {
+                pointsAwarded += 2; 
+            }
+            else if (normalizedGuess.includes(normalizedAnswer.split(" ")[0]))
+            {
+                pointsAwarded += 1;
+            }
 
             setScore(prev=>prev + pointsAwarded); 
             console.log(`Points awarded: ${pointsAwarded}`);
@@ -159,6 +239,15 @@ export default function Game()
             console.log("Incorrect Guess")
         }
     };
+
+    function normalizeName(name)
+    {
+        return name
+                .toLowerCase()
+                .replace(/[^\w\s]/gi, '') // removes all punctuation
+                .replace(/\s+/g, ' ') // replace multiple spaces with single space
+                .trim();
+    }
 
     return (
         console.log("Render Check:",

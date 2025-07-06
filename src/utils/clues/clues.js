@@ -12,6 +12,3 @@ export const Clues = {
   ...Clues_PT,
   ...Clues_UZ
 };
-
-
-export const clueIds = Object.keys(Clues).map(Number);

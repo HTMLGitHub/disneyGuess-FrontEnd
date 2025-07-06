@@ -8,8 +8,6 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-
-
 try
 {
     // Adjust this path to your clues.js file
@@ -28,18 +26,34 @@ try
         const lines = fileContent.split('\n');
 
         let newLines = [];
+        let previousLineWasIndex = false;
 
         for(let i = 0; i < lines.length; i++)
         {
             const line = lines[i];
 
             // Check for clue index comments (e.g. // 1, // 2)
-            if (line.trim().match(/^\/\/\s*\d+/)) {
+            // Match existing index comment lines
+            if (line.trim().match(/^\/\/\s*\d+/))
+            {
                 // Replace with updated clueCounter 
                 newLines.push(`\t// ${clueCounter}`);
                 clueCounter++;
+                previousLineWasIndex = true;
                 continue; // skip adding original lines
             }
+
+            if (line.trim().match(/^\d{1,4}:\s*{/)) 
+            {
+                if (!previousLineWasIndex)
+                {
+                    // No index above this line, so, insert one
+                    newLines.push(`\t// ${clueCounter}`);
+                    clueCounter++;
+                }
+            }
+            
+            previousLineWasIndex = false // reset if line is not index
 
             // otherwise, push oridinal lines
             newLines.push(line);
