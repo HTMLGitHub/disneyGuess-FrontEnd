@@ -18,9 +18,11 @@ export default function Game()
     const [visibleClueCount, setVisibleClueCount] = useState(1);
     const [blurLevel, setBlurLevel] = useState(100);
     const [loading, setLoading] = useState(false);
+    const [score, setScore] = useState(0);
 
-    const clueTimerRef = useRef(null);
     const timersRef = useRef([]);
+
+
 
     useEffect(() =>
     {
@@ -84,34 +86,36 @@ export default function Game()
 
             setLoading(false); // done loading
 
+            const clueInterval = 7500; // 7.5 seconds
+
             // Start timer to update clues & blur
             const blurSteps = [55, 35, 15, 0];
-            const delay = 4000;
+            const totalClues = 4;
 
-            const revealStep = (step) =>
+            // Schedule each clue reveal (first clue is already shown)
+            for (let i = 1; i<totalClues; i++)
             {
-                if(step < blurSteps.length) 
+                const timer = setTimeout(()=>
                 {
-                    const timer = setTimeout(() => 
-                    {
-                        setVisibleClueCount(step + 2); // Clue 1 was shown initially
-                        setBlurLevel(blurSteps[step]);
+                    setVisibleClueCount(i+1);
+                    setBlurLevel(blurSteps[i] !== undefined ? blurSteps[i] : 0); 
+                }, i * clueInterval);
+                timersRef.current.push(timer);
+            }
 
-                        // Auto reveal at the final step
-                        if (blurSteps[step] == 0)
-                        {
-                            setRevealAnswer(true);
-                            return;
-                        }
+            // Schedule image unblur at last clue time
+            const unblurTimer = setTimeout(() => 
+            {
+                setBlurLevel(0);    
+            }, (totalClues - 1) * clueInterval);
+            timersRef.current.push(unblurTimer);
 
-                        revealStep(step + 1); // Call the next step
-                    }, delay);
-
-                    timersRef.current.push(timer);
-                }
-            };
-
-            revealStep(0); // start the sequence
+            // Schedule final reveal after last clue (7.5 seconds)
+            const finalRevealTimer = setTimeout(() => 
+            {
+                setRevealAnswer(true);  
+            }, totalClues * clueInterval);
+            timersRef.current.push(finalRevealTimer);
         })
         .catch((err) => 
         {
@@ -136,6 +140,19 @@ export default function Game()
             setRevealAnswer(true);
             setBlurLevel(0); // remove the blur
             setVisibleClueCount(4); // optionally reveal all clues too
+
+            // Calculate points based on clue revealed
+            let pointsAwarded = 5 - (visibleClueCount - 1); // clue 1 = 5, clue 2 = 4, etc
+
+            if(pointsAwarded < 1)
+            {
+                pointsAwarded = 1; // If image is unblurred, award minimum 1 point
+            }
+
+            if(revealAnswer) pointsAwarded = 0; // No points if name is revealed
+
+            setScore(prev=>prev + pointsAwarded); 
+            console.log(`Points awarded: ${pointsAwarded}`);
         }
         else
         {
@@ -154,6 +171,9 @@ export default function Game()
         }),
 
         <div className="game__container">
+            <div className="game__score">
+                <strong>Score: </strong> {score}
+            </div>
             <div className="game__image">
             {
                 loading ? 
@@ -183,6 +203,13 @@ export default function Game()
                     placeholder="Enter your guess..."
                     value={guess}
                     onChange={(e)=> setGuess(e.target.value)}
+                    onKeyDown={(e)=>
+                        {
+                            if(e.key === 'Enter' && !loading && !revealAnswer && guess.trim())
+                            {
+                                handleGuessSubmit();
+                            }
+                        }}
                     className="game__input"
                     disabled={loading || revealAnswer} // Disable if loading or answer revealed
                     autoFocus={!loading} // Focus input only if not loading
