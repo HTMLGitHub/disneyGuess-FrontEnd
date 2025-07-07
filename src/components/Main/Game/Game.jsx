@@ -25,7 +25,8 @@ export default function Game()
     useEffect(() =>
     {
         handleNewGame(); 
-        setRevealAnswer(false);       
+        setRevealAnswer(false);   
+        // eslint-disable-next-line react-hooks/exhaustive-deps    
     },[]);
 
     const stopALLTimers = () =>
@@ -162,10 +163,7 @@ export default function Game()
             console.log("Character aliases (normalized):", character.aliases.map(a => normalizeName(a)));
         }
 
-        const isAliasMatch = character.aliases && character.aliases.some
-        (
-            alias => normalizeName(alias) === normalizedGuess
-        );
+        const isAliasMatch = character.aliases && character.aliases.some(alias => normalizeName(alias) === normalizedGuess);
 
         console.log("isAliasMatch result:", isAliasMatch);
 
@@ -175,9 +173,7 @@ export default function Game()
             console.log("Character strict aliases (normalized):", character.strictAliases.map(a => normalizeName(a)));
         }
 
-        const isStrictAliasMatch = character.strictAliases && character.strictAliases.some
-        (
-            requiredNames => 
+        const isStrictAliasMatch = character.strictAliases && character.strictAliases.some(requiredNames => 
             {
                 const normalizedRequired = requiredNames.map(name => normalizeName(name));
                 const allIncluded = normalizedRequired.every(req => normalizedGuessWords.includes(req));

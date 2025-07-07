@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Routes, Route, useNavigate, useLocation} from 'react-router-dom';
+import {Routes, Route, /*useNavigate,*/ useLocation} from 'react-router-dom';
 import './App.css';
 import Header from '../Header/Header';
 import Main from "../Main/Main";
@@ -20,16 +20,16 @@ import * from '../../utils/api';
 export default function App()
 {
     const [activeModal, setActiveModal] = useState("");
-    const [isSaving, setIsSaving] = useState(false);
+    //const [isSaving, setIsSaving] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(true);
     const [currentUser, setCurrentUser] = useState({});
-    const [token, setToken] = useState("");
+    //const [token, setToken] = useState("");
     const [registerError, setRegisterError] = useState("");
     const [loginError, setLoginError] = useState("");
     const [isAuthChecked, setIsAuthChecked] = useState(true);
 
     const location = useLocation();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     useEffect(() => 
     {
@@ -42,7 +42,7 @@ export default function App()
         }
     }, [location, isAuthChecked, isLoggedIn]);
 
-    function handleSubmit(request) {
+    /*function handleSubmit(request) {
         setIsSaving(true);
         request()
             .then(() => { closeActiveModal(); })
@@ -57,6 +57,7 @@ export default function App()
                     else { console.error("Unexpected error:", err); }})
             .finally(() => setIsSaving(false));
     }
+            */
 
     const handleRegister = ({name, email, password}) => 
     {
@@ -97,7 +98,7 @@ export default function App()
         return auth.login({ email, password })
       .then((res) => {
         localStorage.setItem("jwt", res.token);
-        setToken(res.token);
+        // setToken(res.token);
         setIsLoggedIn(true);
         setLoginError("");
         return auth.checkToken(res.token);
@@ -115,7 +116,7 @@ export default function App()
     useEffect(() => {
     const storedToken = localStorage.getItem("jwt");
     if (storedToken) { // Save token to state
-      setToken(storedToken);
+      // setToken(storedToken);
       auth.checkToken(storedToken)
         .then((userData) => {
           setCurrentUser(userData);
@@ -135,7 +136,7 @@ export default function App()
     
     const closeActiveModal = () => setActiveModal("");
 
-    const handleSignOut = () => {
+    /*const handleSignOut = () => {
         localStorage.removeItem("jwt");
         setIsLoggedIn(false);
         setCurrentUser({});
@@ -144,6 +145,7 @@ export default function App()
 
         navigate("/", {replace: true});
     }
+    */
 
     console.log("App.jsx - Mounted");
 
@@ -188,7 +190,7 @@ export default function App()
                     closeActiveModal={closeActiveModal}
                     activeModal={activeModal}
                     onLogin={handleLogin}
-                    isSaving={isSaving}
+                    //isSaving={isSaving}
                     setActiveModal={setActiveModal}
                     loginError={loginError}
                 />
@@ -197,7 +199,7 @@ export default function App()
                     closeActiveModal={closeActiveModal}
                     activeModal={activeModal}
                     onRegister={handleRegister}
-                    isSaving={isSaving}
+                    //isSaving={isSaving}
                     setActiveModal={setActiveModal}
                     registerError={registerError}
                 />

@@ -70,5 +70,4 @@ try
 catch(error)
 {
     console.error("Error updating clues.js:", error);
-    process.exit(1); // Exit with failure code
 }
