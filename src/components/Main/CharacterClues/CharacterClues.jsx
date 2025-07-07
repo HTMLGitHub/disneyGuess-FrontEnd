@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './CharacterClues.css';
-import {Clues} from '../../../utils/clues.js'
+import {Clues} from '../../../utils/clues/clues.js'
 
 export default function CharacterClues({characterId, visibleCount})
 {
-    const clues = Clues[2891] || [];
+    const characterData = Clues[characterId];
+    const clues = characterData && characterData.clues ? characterData.clues : [];
+
 
     return (
         <div className="clues__container">
@@ -13,7 +15,7 @@ export default function CharacterClues({characterId, visibleCount})
                 clues.map((clue, index) => 
                 (
                     <p key={index} className={`clue ${index < visibleCount ? 'clue_visible' : 'clue_hidden'}`}>
-                        {`Clue ${index + 1}: ${clue}`}
+                        {clue}
                     </p>
                 ))
             }

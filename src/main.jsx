@@ -8,7 +8,7 @@ console.log("Disney Game Starting ...")
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/disneyGuess-FrontEnd">
       <App />
     </BrowserRouter>
   </StrictMode>

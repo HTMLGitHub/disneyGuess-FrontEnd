@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React from "react";
 import Game from "./Game/Game";
 import "./Main.css";
 

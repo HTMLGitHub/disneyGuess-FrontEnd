@@ -1,1 +1,19 @@
 @import url('./vendor/normalize.css');
+
+:root {
+  --disney-blue: #1B61D6;
+  --disney-gold: #FFD700;
+  --disney-red: #E62429;
+  --disney-darkred: #c21519;
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-blur: 10px;
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --white: #FFF;
+}
+/*Fonts*/
+@font-face {
+  font-family: "Waltograph";
+  src: url("../src/assets/fonts/waltographUI.ttf");
+  font-weight: normal;
+  font-style: normal;
+}

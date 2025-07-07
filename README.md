@@ -1,12 +1,74 @@
-# React + Vite
+# 🎮 **Project: Disney Guess**
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🌟 **Overview**
 
-Currently, two official plugins are available:
+Disney Guess is a fun web-based guessing game where users identify Disney characters based on progressively revealed clues and blurred images.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+### ✨ **Intro**
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+This project challenges players to guess Disney characters with as few clues as possible. The fewer clues used, the higher the score earned.
+
+---
+
+### 🔗 **API**
+
+- Uses the [Disney API](https://disneyapi.dev) to fetch character data dynamically.
+
+---
+
+### 🖼️ **Images**
+
+- Built with **HTML, CSS, JavaScript, React, and Vite**.
+- Character images and names are fetched directly from the Disney API.
+- Progressive clue reveal and image unblur features create engaging gameplay.
+
+---
+
+### 💻 **Technologies Used**
+
+- **React** – Frontend framework for dynamic UI
+- **Vite** – Fast build tool and dev server
+- **JavaScript (ES6+)** – Application logic
+- **CSS** – Styling and layout
+- **GitHub Pages** – Deployment
+- **Disney API** – Data source for characters
+- **ESLint & Prettier** – Code quality and formatting
+
+---
+
+### 📝 **GitHub**
+
+- [🔗 **Link to Frontend Live Site**](https://htmlgithub.github.io/disneyGuess-FrontEnd/)
+
+---
+
+## 🚀 **Improvements & Future Ideas**
+
+Here are current and potential future improvements:
+
+✅ **Current planned improvement:**
+
+- Add more characters to expand the guessing pool.
+
+💡 **Additional future enhancements:**
+
+- Implement **difficulty levels** (easy, medium, hard) with adjusted clue reveal timing.  
+- Add **sound effects and animations** for correct/incorrect guesses to increase engagement.  
+- Integrate a **timer or leaderboard** to compete with friends.  
+- Create a **backend with user accounts** to track individual scores and progress.  
+- Optimize for **mobile responsiveness** to ensure seamless gameplay on phones and tablets.  
+- Add **accessibility features**, such as alternative text for images or ARIA labels, for inclusivity.
+
+---
+
+## 🎥 **Video Demo**
+
+A walkthrough demo video will be created and uploaded soon.
+
+---
+
+👨‍💻 **Developed by Matthew Lee**
+
+© 2025 Disney Guess. All rights reserved.

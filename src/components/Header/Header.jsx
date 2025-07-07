@@ -2,7 +2,6 @@ import React, { useContext} from "react"
 import PropTypes from "prop-types"
 import {Link} from "react-router-dom"
 import "./Header.css"
-import logo from "../../assets/react.svg"
 import CurrentUserContext from "../../Contexts/CurrentUserContext"
 import UserIdentity from "../UserIdentity/UserIdentity"
 
