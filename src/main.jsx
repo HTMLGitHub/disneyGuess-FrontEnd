@@ -6,9 +6,11 @@ import App from "./components/App/App";
 
 console.log("Disney Game Starting ...")
 
+const basename = import.meta.env.DEV ? "/" : "/disneyGuess-FrontEnd";
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <BrowserRouter basename="/disneyGuess-FrontEnd">
+    <BrowserRouter basename={basename}>
       <App />
     </BrowserRouter>
   </StrictMode>

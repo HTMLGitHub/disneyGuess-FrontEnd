@@ -49,3 +49,31 @@
     color: var(--disney-gold);
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
 }
+
+@media (max-width: 430px)
+{
+    .character__image__box
+    {
+        width: 180px;
+        height: 225px;
+    }
+
+    .character__image__name
+    {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 320px)
+{
+    .character__image__box
+    {
+        width: 130px;
+        height: 245px;
+    }
+
+    .character__image__name
+    {
+        font-size: 16px;
+    }
+}

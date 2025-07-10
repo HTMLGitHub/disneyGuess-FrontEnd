@@ -9,10 +9,12 @@
     border-left: 4px solid var(--disney-gold);
     border-radius: 8px;
     margin-bottom: 10px;
-    width: 750px;
+    width: 100%;
+    max-width: 750px;
     display: flex;
     align-items: center;
     transition: opacity 0.5s ease, transform 0.5s ease;
+    box-sizing: border-box;
 }
 
 .clue_visible {
@@ -25,4 +27,22 @@
     transform: translateY(10px);
     pointer-events: none;
     user-select: none;
+}
+
+@media(max-width: 430px)
+{
+    .clue
+    {
+        width: 90%;
+        font-size: 14px;
+    }
+}
+
+@media(max-width: 320px)
+{
+    .clue
+    {
+        width: 75%;
+        font-size: 12px;
+    }
 }

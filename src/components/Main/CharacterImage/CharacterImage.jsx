@@ -23,7 +23,7 @@ export default function CharacterImage({
                     
                     {/* Show spinner IF loading or Error*/}
                     {!imageLoaded && !imageError && <Preloader text="Loading character..." />}
-                    {imageError && (<Spinner text="Error loading image"/>)}
+                    {imageError && (<Preloader text="Error loading image"/>)}
                     <img
                         src={imageUrl}
                         alt={`Image of ${name}`}
