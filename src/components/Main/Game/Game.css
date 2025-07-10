@@ -6,7 +6,7 @@
     min-height: 600px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     background: var(--glass-bg);
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
@@ -17,7 +17,7 @@
     text-align: center;
     font-family: "Cabinet Grotesk Bold", sans-serif;
     position: relative;
-    align-items: flex-start;
+    align-items: center;
 }
 
 .game__score
@@ -123,4 +123,82 @@
 
 .game__buttons_newGame:hover {
     background-color: #f4c10f;
+}
+
+@media (max-width: 430px)
+{
+    .game__container
+    {
+        min-height: calc(100dvh - env(safe-area-inset-bottom));
+        max-height: calc(100hvh - env(safe-area-inset-bottom));
+        margin-top: 0px;
+        overflow: auto;
+        box-sizing: border-box;
+        padding: 16px 16px;
+    }
+
+    .game__score
+    {
+        top: 16px;
+        right: 16px;
+        font-size: 16px;
+        padding: 4px 8px;
+    }
+
+    .game__image
+    {
+        min-height: 200px;
+    }
+
+    .game__input
+    {
+        margin-top: 0px;
+        width: 75%;
+        font-size: 14px;
+        padding: 10px 14px;
+    }
+
+    .game__buttons
+    {
+        /*flex-direction: column;*/
+        gap: 12px;
+        width: 100%;
+        margin-bottom: env(safe-area-inset-bottom);
+    }
+
+    .game__buttons_submit,
+    .game__buttons_newGame
+    {
+        width: 80%;
+        font-size: 14px;
+        padding: 8px 0;
+    }
+}
+
+@media(max-width: 320px)
+{
+    .game__image
+    {
+        min-height: 150px;
+    }
+
+    .game__input
+    {
+        font-size: 12px;
+    }
+
+    .game__buttons
+    {
+        /*flex-direction: column;*/
+        gap: 12px;
+        width: 100%;
+        margin-bottom: env(safe-area-inset-bottom);
+    }
+
+    .game__buttons_submit,
+    .game__buttons_newGame
+    {
+        width: 80%;
+        font-size: 12px;
+    }
 }
