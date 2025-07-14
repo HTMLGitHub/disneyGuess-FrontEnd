@@ -1,18 +1,21 @@
 .clues__container {
-    margin-top: 20px;
+    margin-top: clamp(12px, 3vw, 20px);
     text-align: left;
 }
 
 .clue {
     background: rgba(255, 255, 255, 0.1);
-    padding: 10px 14px;
+    padding: clamp(6px, 2vw, 10px) clamp(8px, 3vw, 14px);
     border-left: 4px solid var(--disney-gold);
     border-radius: 8px;
-    margin-bottom: 10px;
-    width: 750px;
+    margin-bottom: clamp(6px, 2vw, 10px);
+    width: clamp(75%, 90%, 100%);
+    max-width: 750px;
+    font-size: clamp(var(--font-size-xs), 3vw, var(--font-size-base));
     display: flex;
     align-items: center;
     transition: opacity 0.5s ease, transform 0.5s ease;
+    box-sizing: border-box;
 }
 
 .clue_visible {

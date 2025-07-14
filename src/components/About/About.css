@@ -2,7 +2,7 @@
 {
     max-width: 800px;
     margin: 0 auto;
-    padding: 32px;
+    padding: clamp(16px, 4vw, 32px);
     background: var(--glass-bg);
     border-radius: 20px;
     backdrop-filter: blur(var(--glass-blur));
@@ -15,8 +15,8 @@
 .about__header
 {
     text-align: center;
-    font-size: 45px;
-    margin-bottom: 24px;
+    font-size: clamp(24px, 5vw, 45px);
+    margin-bottom: clamp(12px, 3vw, 24px);
     color: var(--disney-gold);
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     font-family: "Waltograph", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -24,28 +24,28 @@
 
 .about__intro
 {
-    font-size: 20px;
+    font-size: clamp(16px, 3vw, 20px);
     text-align: center;
-    margin-bottom: 32px;
+    margin-bottom: clamp(16px, 4vw, 32px);
     color: var(--white);
 }
 
 .about__play
 {
-    margin-bottom: 32px;
+    margin-bottom: clamp(16px, 4ve, 32px);
 }
 
 .about__title
 {
-    font-size: 26px;
+    font-size: clamp(18px, 4vw, 26px);
     color: var(--disney-red);
-    margin-bottom: 8px;
+    margin-bottom: clamp(6px, 2vw, 8px);
     font-family: "Waltograph", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .about__play-steps
 {
-    padding-left: 24px;
+    padding-left: clamp(12px, 3vw, 24px);
     line-height: 1.8;
 }
 
@@ -56,12 +56,12 @@
 
 .about__creator
 {
-    margin-bottom: 32px;
+    margin-bottom: clamp(16px, 4vw, 32px);
 }
 
 .about__creator-text
 {
-    font-size: 18px;
+    font-size: clamp(14px, 3vw, 18px);
     line-height: 1.6;
 }
 
@@ -73,12 +73,12 @@
 
 .about__tech
 {
-    margin-bottom: 32px;
+    margin-bottom: clamp(16px, 4vw, 32px);
 }
 
 .about__tech-list
 {
-    padding-left: 26px;
+    padding-left: clamp(14px, 3vw, 26px);
     line-height: 1.8;
 }
 
@@ -101,30 +101,30 @@
 
 .about__disclaimer
 {
-    margin-bottom: 32px;
+    margin-bottom: clamp(16px, 4vw, 32px);
 }
 
 .about__disclaimer-text
 {
-    font-size: 18px;
+    font-size: clamp(14px, 3vw, 18px);
     line-height: 1.6;
 }
 
 .about__start
 {
     text-align: center;
-    margin-top: 40px;
+    margin-top: clamp(20px, 5vw, 40px);
 }
 
 .about__start-link
 {
     background: var(--disney-red);
     color: var(--white);
-    padding: 14px 26px;
+    padding: clamp(8px, 3vw, 14px) clamp(12px, 5vw, 26px);
     border-radius: 12px;
     text-decoration: none;
     font-weight: bold;
-    font-size: 18px;
+    font-size: clamp(14px, 3vw, 18px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
     transition: background 0.3s ease;
     font-family: "Waltograph", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;

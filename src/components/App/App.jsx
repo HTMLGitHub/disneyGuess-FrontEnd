@@ -12,11 +12,9 @@ import RegisterModal from '../Modal/RegisterModal/RegisterModal'
 import CurrentUserContext from '../../Contexts/CurrentUserContext';
 import ProtectedRoutes from '../ProtectedRoutes/ProtectedRoutes';
 import * as auth from '../../utils/auth.js'; // Import auth functions
+import getCharacter from '../../utils/api.js';
+import { Clues } from '../../utils/clues/clues.js';
 
-
-/*
-import * from '../../utils/api';
-*/
 export default function App()
 {
     const [activeModal, setActiveModal] = useState("");
@@ -27,6 +25,10 @@ export default function App()
     const [registerError, setRegisterError] = useState("");
     const [loginError, setLoginError] = useState("");
     const [isAuthChecked, setIsAuthChecked] = useState(true);
+    const [character, setCharacter] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [score, setScore] = useState(0);
+    const [error, setError] = useState(null);
 
     const location = useLocation();
     // const navigate = useNavigate();
@@ -41,6 +43,37 @@ export default function App()
             window.history.replaceState({}, document.title);
         }
     }, [location, isAuthChecked, isLoggedIn]);
+
+    const fetchCharacterById = async (id) => {
+        setLoading(true);
+        setError(null);
+
+        getCharacter(id)
+        .then((data) =>
+        {
+            const apiCharacter = data.data;
+            const clueData = Clues[apiCharacter._id] || {};
+
+            const mergedCharacter =
+            {
+                ...apiCharacter, 
+                aliases: clueData.aliases || [],
+                strictAliases: clueData.strictAliases || [],
+                clues: clueData.clues || [],
+            };
+
+            setCharacter(mergedCharacter); 
+        })
+        .catch((err) =>
+        {
+            console.error(`Error fetching character: ${err}`);
+            setError(err.message);
+        })
+        .finally(() => 
+        {
+            setLoading(false);
+        })
+    }
 
     /*function handleSubmit(request) {
         setIsSaving(true);
@@ -147,8 +180,6 @@ export default function App()
     }
     */
 
-    console.log("App.jsx - Mounted");
-
     return (
         <CurrentUserContext.Provider value={currentUser}>
             <div className='app'>
@@ -162,7 +193,14 @@ export default function App()
                             path='/'
                             element=
                             {
-                                <Main/>
+                                <Main
+                                    character={character}
+                                    error={error}
+                                    loading={loading}
+                                    score={score}
+                                    setScore={setScore}
+                                    fetchCharacterById={fetchCharacterById}
+                                />
                             }
                         />
                         {/*<Route
