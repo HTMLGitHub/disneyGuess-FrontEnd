@@ -3,12 +3,26 @@
 :root {
   --disney-blue: #1B61D6;
   --disney-gold: #FFD700;
+  --disney-gold-error: #ffe100;
   --disney-red: #E62429;
   --disney-darkred: #c21519;
   --glass-bg: rgba(255, 255, 255, 0.08);
   --glass-blur: 10px;
   --glass-border: rgba(255, 255, 255, 0.2);
   --white: #FFF;
+  --black: #000;
+
+  --shadow-glass: 0 10px 30px rgba(0, 0, 0, 0.15);
+  
+  --border-radius-large: 20px;
+  --border-radius-medium: 10px;
+  --border-radius-small: 8px;
+  --border-radius-xs: 4px;
+
+  --font-size-base: 16px;
+  --font-size-large: 19px;
+  --font-size-small: 14px;
+  --font-size-xs: 12px;
 }
 /*Fonts*/
 @font-face {
@@ -16,4 +30,9 @@
   src: url("../src/assets/fonts/waltographUI.ttf");
   font-weight: normal;
   font-style: normal;
+}
+
+*,*::before,*::after
+{
+  box-sizing: border-box;
 }
