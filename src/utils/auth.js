@@ -1,7 +1,7 @@
-import { baseURL } from "../utils/constants.js";
+import { BASEURL } from "../utils/constants.js";
 
 export const register = ({name, email, password}) => {
-    return fetch(`${baseURL}/signup`, {
+    return fetch(`${BASEURL}/signup`, {
         method: "POST",
         headers: {"Content-Type": "application/json",},
         body: JSON.stringify({name, email, password}),
@@ -34,7 +34,7 @@ const authRequest = ({endpoints, method = "GET", token = null, body = null}) => 
     const headers = {"Content-Type": "application/json",};
     if (token) headers.Authorization = `Bearer ${token}`;
 
-    return fetch(`${baseURL}/${endpoints}`, {
+    return fetch(`${BASEURL}/${endpoints}`, {
         method,
         headers,
         body: body ? JSON.stringify(body) : undefined,

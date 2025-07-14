@@ -10,7 +10,7 @@ const basename = import.meta.env.DEV ? "/" : "/disneyGuess-FrontEnd";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <BrowserRouter basename={basename}>
+    <BrowserRouter basename={basename}> 
       <App />
     </BrowserRouter>
   </StrictMode>
