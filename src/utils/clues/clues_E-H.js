@@ -109,7 +109,7 @@ export const Clues_EH = {
     },
 
 	// 50
-    2777: {
+    2377: {
         name: "Flora, Fauna, and Merryweather",
         aliases: [
             "Three Good Fairies", 
