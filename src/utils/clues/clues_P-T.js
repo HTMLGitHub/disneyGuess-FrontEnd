@@ -579,7 +579,14 @@ export const Clues_PT = {
 	// 145
     6967: {
         name: "Tweedle Dee and Tweedle Dum",
-        aliases: ["Tweedle Dee", "Tweedle Dum"],
+        aliases: [
+            "Tweedle Dee", 
+            "Tweedle Dum", 
+            "Tweedle Dee and Tweedle Dum", 
+            "Tweedle Dum and Tweedle Dee",
+            "Tweedles",
+            "The Tweedles",
+        ],
         strictAliases: ["Tweedle Dee", "Tweedle Dum"],
         clues: [
             "They’re the chubby twins dressed in red and blue,",

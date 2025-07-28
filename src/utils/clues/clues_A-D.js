@@ -397,18 +397,6 @@ export const Clues_AD = {
     },
 
 	// 34
-    1833: {
-        name: "Dottie McStuffins",
-        aliases: ["Doc McStuffins", "Doc"],
-        clues: [
-            "She’s a little girl with a doctor’s kit in hand,",
-            "Fixing toys and stuffed friends throughout the land,",
-            "With her stethoscope and caring heart so bright,",
-            "She makes every boo-boo feel all right.",
-        ],
-    },
-
-	// 35
     1869: {
         name: "The Doorknob",
         aliases: ["Doorknob"],
@@ -420,7 +408,7 @@ export const Clues_AD = {
         ],
     },
 
-	// 36
+	// 35
     1870: {
         name: "Dopey",
         aliases: [],
@@ -432,7 +420,7 @@ export const Clues_AD = {
         ],
     },
 
-	// 37
+	// 36
     1875: {
         name: "Dormouse",
         aliases: ["The Dormouse"],
@@ -444,6 +432,17 @@ export const Clues_AD = {
         ],
     },
 
+	// 37
+    1883: {
+        name: "Dottie McStuffins",
+        aliases: ["Doc McStuffins", "Doc"],
+        clues: [
+            "She’s a little girl with a doctor’s kit in hand,",
+            "Fixing toys and stuffed friends throughout the land,",
+            "With her stethoscope and caring heart so bright,",
+            "She makes every boo-boo feel all right.",
+        ],
+    },
 
 	// 38
     1944: {

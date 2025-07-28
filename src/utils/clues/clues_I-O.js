@@ -110,8 +110,8 @@ export const Clues_IO = {
 
 	// 78
     4117: {
-      name: "The Mad Hatter",
-      aliases: ["Mad Hatter", "Hatter"],
+      name: "Mad Hatter",
+      aliases: ["The Mad Hatter", "Hatter"],
       clues: [
           "He’s the eccentric man with a hat so tall,",
           "Hosting tea parties that make no sense at all,",
